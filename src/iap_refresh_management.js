@@ -33,15 +33,14 @@ async function update_iap_history_with_apple_if_needed_and_return_updated_user(a
       return { account: account, user_id: user_id };
     }
 
-    const { account: new_account, request_error } = add_successful_transactions_to_account(app, account.pubkey, verified_transaction_history);
+    const { account: new_account, user_id: latest_user_id, request_error } = add_successful_transactions_to_account(app, account.pubkey, verified_transaction_history);
     if (request_error) {
       return { account: account, user_id: user_id, request_error: request_error };
     }
+    return { account: new_account, user_id: latest_user_id }
   } catch (error) {
     return { account: account, user_id: user_id, request_error: error.message };
   }
-
-  return get_account_and_user_id(app, pubkey);
 }
 
 async function should_iap_transaction_history_be_refreshed(account) {
