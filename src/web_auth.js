@@ -5,9 +5,10 @@ const { nip04 } = require('nostr-tools')
 const { v4: uuidv4 } = require('uuid')
 const { current_time } = require('./utils')
 const { finalizeEvent } = require('nostr-tools/pure')
-const { Relay, useWebSocketImplementation } = require('nostr-tools/relay')
 const { unauthorized_response } = require('./server_helpers')
+const { useWebSocketImplementation } = require('nostr-tools/pool')
 useWebSocketImplementation(require('ws'))
+const { SimplePool } = require('nostr-tools/pool')
 
 const DEFAULT_SESSION_EXPIRY = 60 * 60 * 24 * 7 // 1 week
 const DEFAULT_OTP_MAX_TRIES = 10  // 10 tries before an OTP is invalidated
@@ -19,9 +20,11 @@ const DEFAULT_OTP_EXPIRY = 60 * 5 // 5 minutes
 class WebAuthManager {
   /** Initializes the WebAuthManager
     * @param {object} dbs - The PurpleApi dbs object
+    * @param {SimplePool} pool - The relay pool to use for sending events
   */
-  constructor(dbs) {
+  constructor(dbs, pool) {
     this.dbs = dbs
+    this.pool = pool
     this.otp_max_tries = process.env.OTP_MAX_TRIES || DEFAULT_OTP_MAX_TRIES
     this.session_expiry = process.env.SESSION_EXPIRY || DEFAULT_SESSION_EXPIRY
     this.otp_expiry = process.env.OTP_EXPIRY || DEFAULT_OTP_EXPIRY
@@ -63,14 +66,10 @@ class WebAuthManager {
 
     const signed_event = finalizeEvent(event, secret_key);
 
-    for (let relay_url of relays) {
-      try {
-        const relay = await Relay.connect(relay_url);
-        await relay.publish(signed_event);
-        relay.close();
-      } catch (error) {
-        console.error(`Error sending OTP via relay ${relay_url}:`, error);
-      }
+    try {
+      await this.pool.publish(relays, signed_event)
+    } catch (error) {
+      console.error(`Error sending OTP:`, error);
     }
   }
 
@@ -106,7 +105,7 @@ class WebAuthManager {
   // MARK: Utils
 
   /**
-   * Generates a random 6-digit OTP code 
+   * Generates a random 6-digit OTP code
    * @returns {string} The generated OTP code
    */
   random_otp() {

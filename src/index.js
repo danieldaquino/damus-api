@@ -9,6 +9,7 @@ const express = require('express')
 const debug = require('debug')('api')
 const { PurpleInvoiceManager } = require('./invoicing')
 const { WebAuthManager } = require('./web_auth')
+const { SimplePool } = require('nostr-tools/pool')
 
 const ENV_VARS = ["LN_NODE_ID", "LN_NODE_ADDRESS", "LN_RUNE", "LN_WS_PROXY", "DEEPL_KEY", "DB_PATH", "NOTEDECK_INSTALL_MD"]
 
@@ -53,7 +54,8 @@ function PurpleApi(opts = {}) {
   this.invoice_manager = new PurpleInvoiceManager(this, process.env.LN_NODE_ID, process.env.LN_NODE_ADDRESS, process.env.LN_RUNE, process.env.LN_WS_PROXY)
   debug("loaded invoice-manager node_id:%s node_addr:%s rune:%s proxy:%s", process.env.LN_NODE_ID, process.env.LN_NODE_ADDRESS, process.env.LN_RUNE, process.env.LN_WS_PROXY)
   this.invoice_manager.connect_and_init()
-  this.web_auth_manager = new WebAuthManager(dbs)
+  this.pool = new SimplePool()
+  this.web_auth_manager = new WebAuthManager(dbs, this.pool)
 
   return this
 }
