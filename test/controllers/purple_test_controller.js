@@ -56,6 +56,7 @@ class PurpleTestController {
     process.env.SESSION_EXPIRY = 60*60*24*7
     process.env.OTP_EXPIRY = 60*5
     process.env.TESTFLIGHT_URL = "https://testflight.apple.com/join/abc123"
+    process.env.NOTEDECK_INSTALL_MD = "./notedeck-install-instructions.md"
   }
 
   setup_stubs() {
