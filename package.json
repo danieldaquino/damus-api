@@ -19,7 +19,8 @@
     "dev": "TRANSLATION_PROVIDER=mock ENABLE_HTTP_AUTH=\"true\" node src/index.js",
     "dev-debug": "TRANSLATION_PROVIDER=mock ENABLE_HTTP_AUTH=\"true\" node --inspect src/index.js",
     "dev-debug-cli": "TRANSLATION_PROVIDER=mock ENABLE_HTTP_AUTH=\"true\" node inspect src/index.js",
-    "type-check": "tsc --checkJs --allowJs src/*.js --noEmit --skipLibCheck",
+    "type-check": "tsc --checkJs --allowJs src/*.js test/*.js --noEmit --skipLibCheck",
+    "type-check-compare": "tsc --checkJs --allowJs src/*.js test/*.js --noEmit --skipLibCheck > .type_check.txt",
     "type-check-path": "tsc --checkJs --allowJs --noEmit --skipLibCheck"
   },
   "dependencies": {

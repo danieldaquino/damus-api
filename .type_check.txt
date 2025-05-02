@@ -1,0 +1,91 @@
+src/app_store_receipt_verifier.js(86,57): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+src/index.js(12,32): error TS2307: Cannot find module 'nostr-tools/pool' or its corresponding type declarations.
+src/index.js(36,34): error TS2345: Argument of type 'string' is not assignable to parameter of type 'DatabaseOptions & { name: string; }'.
+  Type 'string' is not assignable to type '{ name: string; }'.
+src/index.js(37,30): error TS2345: Argument of type 'string' is not assignable to parameter of type 'DatabaseOptions & { name: string; }'.
+  Type 'string' is not assignable to type '{ name: string; }'.
+src/index.js(38,41): error TS2345: Argument of type 'string' is not assignable to parameter of type 'DatabaseOptions & { name: string; }'.
+  Type 'string' is not assignable to type '{ name: string; }'.
+src/index.js(39,43): error TS2345: Argument of type 'string' is not assignable to parameter of type 'DatabaseOptions & { name: string; }'.
+  Type 'string' is not assignable to type '{ name: string; }'.
+src/index.js(40,30): error TS2345: Argument of type 'string' is not assignable to parameter of type 'DatabaseOptions & { name: string; }'.
+  Type 'string' is not assignable to type '{ name: string; }'.
+src/index.js(41,39): error TS2345: Argument of type 'string' is not assignable to parameter of type 'DatabaseOptions & { name: string; }'.
+  Type 'string' is not assignable to type '{ name: string; }'.
+src/index.js(42,31): error TS2345: Argument of type 'string' is not assignable to parameter of type 'DatabaseOptions & { name: string; }'.
+  Type 'string' is not assignable to type '{ name: string; }'.
+src/index.js(43,30): error TS2345: Argument of type 'string' is not assignable to parameter of type 'DatabaseOptions & { name: string; }'.
+  Type 'string' is not assignable to type '{ name: string; }'.
+src/invoicing.js(187,53): error TS2554: Expected 0 arguments, but got 1.
+src/nip98_auth.js(25,5): error TS2304: Cannot find name 'auth_header_parts'.
+src/nip98_auth.js(26,9): error TS2304: Cannot find name 'auth_header_parts'.
+src/nip98_auth.js(30,9): error TS2304: Cannot find name 'auth_header_parts'.
+src/translate.js(110,36): error TS2538: Type 'Buffer' cannot be used as an index type.
+src/web_auth.js(7,35): error TS2307: Cannot find module 'nostr-tools/pure' or its corresponding type declarations.
+src/web_auth.js(9,48): error TS2307: Cannot find module 'nostr-tools/pool' or its corresponding type declarations.
+src/web_auth.js(11,32): error TS2307: Cannot find module 'nostr-tools/pool' or its corresponding type declarations.
+src/web_auth.js(43,25): error TS2365: Operator '+' cannot be applied to types 'number' and 'string | number'.
+src/web_auth.js(161,9): error TS2365: Operator '>' cannot be applied to types 'number' and 'string | number'.
+test/controllers/mock_iap_controller.js(85,60): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+test/controllers/purple_test_controller.js(49,5): error TS2322: Type 'boolean' is not assignable to type 'string'.
+test/controllers/purple_test_controller.js(55,5): error TS2322: Type 'number' is not assignable to type 'string'.
+test/controllers/purple_test_controller.js(56,5): error TS2322: Type 'number' is not assignable to type 'string'.
+test/controllers/purple_test_controller.js(57,5): error TS2322: Type 'number' is not assignable to type 'string'.
+test/otp_login.test.js(104,90): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+test/otp_login.test.js(134,21): error TS2365: Operator '<' cannot be applied to types 'number' and 'string'.
+test/otp_login.test.js(186,44): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+test/otp_login.test.js(239,44): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+test/transaction_management.test.js(34,45): error TS2345: Argument of type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }' is not assignable to type 'Transaction'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(63,45): error TS2345: Argument of type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }' is not assignable to type 'Transaction'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(92,45): error TS2345: Argument of type '{ type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }' is not assignable to type 'Transaction'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(121,45): error TS2345: Argument of type '{ type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }' is not assignable to type 'Transaction'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(150,45): error TS2345: Argument of type '{ type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }' is not assignable to type 'Transaction'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(186,45): error TS2345: Argument of type '{ type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }' is not assignable to type 'Transaction'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(204,45): error TS2345: Argument of type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }' is not assignable to type 'Transaction'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(230,45): error TS2345: Argument of type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }' is not assignable to type 'Transaction'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(256,45): error TS2345: Argument of type '({ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; } | { type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; })[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; } | { type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }' is not assignable to type 'Transaction'.
+    Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }' is not assignable to type 'Transaction'.
+      Types of property 'type' are incompatible.
+        Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(307,45): error TS2345: Argument of type '({ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; } | { type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; })[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; } | { type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }' is not assignable to type 'Transaction'.
+    Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }' is not assignable to type 'Transaction'.
+      Types of property 'type' are incompatible.
+        Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(385,45): error TS2345: Argument of type '({ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; } | { type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; } | { ...; })[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; } | { type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; } | { ...; }' is not assignable to type 'Transaction'.
+    Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }' is not assignable to type 'Transaction'.
+      Types of property 'type' are incompatible.
+        Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(430,45): error TS2345: Argument of type '({ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; } | { type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; })[]' is not assignable to parameter of type 'Transaction[]'.
+  Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; } | { type: string; id: any; start_date: any; end_date: any; purchased_date: number; duration: number; }' is not assignable to type 'Transaction'.
+    Type '{ type: string; id: string; start_date: number; end_date: number; purchased_date: number; duration: any; }' is not assignable to type 'Transaction'.
+      Types of property 'type' are incompatible.
+        Type 'string' is not assignable to type '"iap" | "ln" | "legacy"'.
+test/transaction_management.test.js(436,10): error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+test/translate.test.js(7,27): error TS2305: Module '"./controllers/utils"' has no exported member 'TEST_BASE_URL'.
