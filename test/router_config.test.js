@@ -67,6 +67,10 @@ test('config_router - Account management routes', async (t) => {
       require_web_auth: async (req, res, next) => {
         req.authorized_pubkey = 'abc123';
         next();
+      },
+      use_web_auth: async (req, res, next) => {
+        req.authorized_pubkey = 'abc123';
+        next();
       }
     }
   };

@@ -188,6 +188,10 @@ async function generate_test_api(t, config) {
       require_web_auth: async (req, res, next) => {
         req.authorized_pubkey = 'abc123';
         next();
+      },
+      use_web_auth: async (req, res, next) => {
+        req.authorized_pubkey = 'abc123';
+        next();
       }
     }
   };

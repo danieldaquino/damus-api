@@ -25,7 +25,6 @@ src/web_auth.js(7,35): error TS2307: Cannot find module 'nostr-tools/pure' or it
 src/web_auth.js(9,48): error TS2307: Cannot find module 'nostr-tools/pool' or its corresponding type declarations.
 src/web_auth.js(11,32): error TS2307: Cannot find module 'nostr-tools/pool' or its corresponding type declarations.
 src/web_auth.js(43,25): error TS2365: Operator '+' cannot be applied to types 'number' and 'string | number'.
-src/web_auth.js(161,9): error TS2365: Operator '>' cannot be applied to types 'number' and 'string | number'.
 test/controllers/mock_iap_controller.js(85,60): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
 test/controllers/purple_test_controller.js(49,5): error TS2322: Type 'boolean' is not assignable to type 'string'.
 test/controllers/purple_test_controller.js(55,5): error TS2322: Type 'number' is not assignable to type 'string'.

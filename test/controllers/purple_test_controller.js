@@ -57,6 +57,8 @@ class PurpleTestController {
     process.env.OTP_EXPIRY = 60*5
     process.env.TESTFLIGHT_URL = "https://testflight.apple.com/join/abc123"
     process.env.NOTEDECK_INSTALL_MD = "./notedeck-install-instructions.md"
+    process.env.NOTEDECK_INSTALL_PREMIUM_MD = "./notedeck-install-instructions-premium.md"
+    this.env = process.env
   }
 
   setup_stubs() {
@@ -193,8 +195,23 @@ class PurpleTestController {
     const check_invoice_status_response = await this.clients[pubkey].check_invoice(verify_checkout_response.body.id);
     this.t.same(check_invoice_status_response.status, 200)
   }
-  
-  
+
+  async login(pubkey) {
+    // Let's request an OTP
+    const test_otp = "432931";
+    this.web_auth_controller.set_next_random_otp(test_otp);
+    const otp_response = await this.clients[pubkey].request_otp();
+    this.t.same(otp_response.statusCode, 200);
+    this.t.same(otp_response.body, { success: true });
+
+    // Login with the correct OTP
+    const login_response = await this.clients[pubkey].verify_otp(test_otp);
+    this.t.same(login_response.statusCode, 200);
+    this.t.same(login_response.body.valid, true);
+    this.t.ok(login_response.body.session_token);
+    return login_response.body.session_token
+  }
+
   // MARK: - Account UUID control
   
   /**

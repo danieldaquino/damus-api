@@ -26,7 +26,7 @@ class WebAuthManager {
     this.dbs = dbs
     this.pool = pool
     this.otp_max_tries = process.env.OTP_MAX_TRIES || DEFAULT_OTP_MAX_TRIES
-    this.session_expiry = process.env.SESSION_EXPIRY || DEFAULT_SESSION_EXPIRY
+    this.session_expiry = parseInt(process.env.SESSION_EXPIRY) || DEFAULT_SESSION_EXPIRY
     this.otp_expiry = process.env.OTP_EXPIRY || DEFAULT_OTP_EXPIRY
   }
 
@@ -128,7 +128,7 @@ class WebAuthManager {
   // MARK: Middleware
 
   /**
-   * Middleware to check if a user is authenticated
+   * Middleware to check and require a user to be authenticated
    * @param {object} req - The Express request object
    * @param {object} res - The Express response object
    * @param {function} next - The next middleware function
@@ -163,6 +163,49 @@ class WebAuthManager {
       unauthorized_response(res, 'Unauthorized, session expired');
       return;
     }
+
+    req.authorized_pubkey = session_data.pubkey;
+    next();
+  }
+
+  /**
+   * Middleware to check if a user is authenticated, but does not require authentication
+   * @param {object} req - The Express request object
+   * @param {object} res - The Express response object
+   * @param {function} next - The next middleware function
+   */
+  async use_web_auth(req, res, next) {
+    const auth_header = req.header('Authorization');
+
+    if (!auth_header) {
+      next();
+      return;
+    }
+
+    const [auth_type, token] = auth_header.split(' ');
+    if (auth_type !== 'Bearer') {
+      next();
+      return;
+    }
+
+    if (!token) {
+      next();
+      return;
+    }
+
+    const session_data = await this.dbs.sessions.get(token);
+    if (!session_data) {
+      next();
+      return;
+    }
+
+    // Check if the session has expired
+    if (current_time() - session_data.created_at > this.session_expiry) {
+      next();
+      return;
+    }
+
+    // User authenticated!
 
     req.authorized_pubkey = session_data.pubkey;
     next();

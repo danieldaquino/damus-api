@@ -1,8 +1,6 @@
 # Installing Notedeck
 
-Thank you for your interest in the Notedeck Alpha release! We are excited to have you try out our software. Below are the instructions for installing Notedeck on your system.
-
-If you are a Purple user, you can now access our beta release! To access the beta install instructions, click [here](/purple/login).
+Thank you for your interest in the Notedeck Beta release! We are excited to have you try out our software. Below are the instructions for installing Notedeck on your system.
 
 If you encounter any issues, please [contact us](support@damus.io).
 

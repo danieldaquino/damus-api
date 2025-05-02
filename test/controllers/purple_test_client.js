@@ -39,8 +39,18 @@ class PurpleTestClient {
   }
 
   /**
+   * Gets the notedeck install instructions
+   *
+   * @param {PurpleTestClientRequestOptions} options - The request options
+   * @returns {Promise<Object>} The response
+   */
+  async get_notedeck_install_instructions(options = {}) {
+    return await this.get('/notedeck-install-instructions', options)
+  }
+
+  /**
    * Gets the product template options.
-   * 
+   *
    * @param {PurpleTestClientRequestOptions} options - The request options
    * @returns {Promise<Object>} The product information
    */
