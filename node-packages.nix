@@ -940,13 +940,13 @@ let
         sha512 = "p25OQiEB5x8rWWoWLRRbxtxQiaQgypaQQakSKw5+cp/SW0DXea/soMzqmTXei1I6HrcARuyfvedGTdoEU471Ow==";
       };
     };
-    "nostr-tools-2.3.2" = {
+    "nostr-tools-2.12.0" = {
       name = "nostr-tools";
       packageName = "nostr-tools";
-      version = "2.3.2";
+      version = "2.12.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/nostr-tools/-/nostr-tools-2.3.2.tgz";
-        sha512 = "8ceZ2ItkAGjR5b9+QOkkV9KWBOK0WPlpFrPPXmbWnNMcnlj9zB7rjdYPK2sV/OK4Ty9J3xL6+bvYKY77gup5EQ==";
+        url = "https://registry.npmjs.org/nostr-tools/-/nostr-tools-2.12.0.tgz";
+        sha512 = "pUWEb020gTvt1XZvTa8AKNIHWFapjsv2NKyk43Ez2nnvz6WSXsrTFE0XtkNLSRBjPn6EpxumKeNiVzLz74jNSA==";
       };
     };
     "nostr-wasm-0.1.0" = {
@@ -1405,7 +1405,7 @@ let
       sources."node-fetch-2.7.0"
       sources."node-gyp-build-optional-packages-5.1.1"
       sources."nostr-0.2.8"
-      sources."nostr-tools-2.3.2"
+      sources."nostr-tools-2.12.0"
       sources."nostr-wasm-0.1.0"
       sources."object-assign-4.1.1"
       sources."object-inspect-1.13.1"
