@@ -468,6 +468,29 @@ function config_router(app) {
     }
   });
 
+  router.get('/damus-android-install-instructions', app.web_auth_manager.use_web_auth.bind(app.web_auth_manager), async (req, res) => {
+    if(!req.authorized_pubkey) {
+      provide_damus_android_instructions(req, res, false)  // Provides free download instructions
+      return
+    }
+
+    const { account, user_id } = get_account_and_user_id(app, req.authorized_pubkey)
+    if (!account) {
+      simple_response(res, 401)
+      return
+    }
+
+    const account_info = get_account_info_payload(user_id, account, true)
+    if (account_info.active == true) {
+      provide_damus_android_instructions(req, res, true) // Provide premium download instructions
+      return
+    }
+    else {
+      provide_damus_android_instructions(req, res, false) // Provide free download instructions
+      return
+    }
+  });
+
   // MARK: Admin routes
 
   // Used by the admin to create a new verified checkout
@@ -685,6 +708,20 @@ function get_allowed_cors_origins() {
 
 async function provide_notedeck_instructions(req, res, user_authenticated) {
   const installInstructionsPath = user_authenticated == true ? path.resolve(process.env.NOTEDECK_INSTALL_PREMIUM_MD) : path.resolve(process.env.NOTEDECK_INSTALL_MD);
+  try {
+    const installInstructions = fs.readFileSync(installInstructionsPath, { encoding: 'utf8' });
+    json_response(res, { value: installInstructions });
+    return
+  } catch (err) {
+    console.log(err);
+    error("Failed to read file: %s", err.toString());
+    error_response(res, 'Failed to load installation instructions');
+    return
+  }
+}
+
+async function provide_damus_android_instructions(req, res, user_authenticated) {
+  const installInstructionsPath = user_authenticated == true ? path.resolve(process.env.DAMUS_ANDROID_INSTALL_PREMIUM_MD) : path.resolve(process.env.DAMUS_ANDROID_INSTALL_MD);
   try {
     const installInstructions = fs.readFileSync(installInstructionsPath, { encoding: 'utf8' });
     json_response(res, { value: installInstructions });

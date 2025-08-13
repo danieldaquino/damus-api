@@ -11,7 +11,7 @@ const { PurpleInvoiceManager } = require('./invoicing')
 const { WebAuthManager } = require('./web_auth')
 const { SimplePool } = require('nostr-tools/pool')
 
-const ENV_VARS = ["LN_NODE_ID", "LN_NODE_ADDRESS", "LN_RUNE", "LN_WS_PROXY", "DEEPL_KEY", "DB_PATH", "NOTEDECK_INSTALL_MD"]
+const ENV_VARS = ["LN_NODE_ID", "LN_NODE_ADDRESS", "LN_RUNE", "LN_WS_PROXY", "DEEPL_KEY", "DB_PATH", "NOTEDECK_INSTALL_MD", "NOTEDECK_INSTALL_PREMIUM_MD", "DAMUS_ANDROID_INSTALL_MD", "DAMUS_ANDROID_INSTALL_PREMIUM_MD"]
 
 function check_env() {
   const missing = []

@@ -14,6 +14,8 @@ The Damus API backend for Damus Purple and other functionality.
 - `TESTFLIGHT_URL`: URL for the TestFlight app (optional)
 - `NOTEDECK_INSTALL_MD`: Path to the freely available notedeck installation instructions (markdown file)
 - `NOTEDECK_INSTALL_PREMIUM_MD`: Path to the premium notedeck installation instructions (markdown file)
+- `DAMUS_ANDROID_INSTALL_MD`: Path to the freely available Damus Android installation instructions (markdown file)
+- `DAMUS_ANDROID_INSTALL_PREMIUM_MD`: Path to the premium Damus Android installation instructions (markdown file)
 
 #### Translations
 
