@@ -58,6 +58,8 @@ class PurpleTestController {
     process.env.TESTFLIGHT_URL = "https://testflight.apple.com/join/abc123"
     process.env.NOTEDECK_INSTALL_MD = "./notedeck-install-instructions.md"
     process.env.NOTEDECK_INSTALL_PREMIUM_MD = "./notedeck-install-instructions-premium.md"
+    process.env.DAMUS_ANDROID_INSTALL_MD = "./damus-android-install-instructions.md"
+    process.env.DAMUS_ANDROID_INSTALL_PREMIUM_MD = "./damus-android-install-instructions-premium.md"
     this.env = process.env
   }
 
