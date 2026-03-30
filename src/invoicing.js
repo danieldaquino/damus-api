@@ -61,6 +61,7 @@ class PurpleInvoiceManager {
     this.invoice_templates = getInvoiceTemplates()
     this.checkout_sessions_db = api.dbs.checkout_sessions
     this.api = api
+    this.polling_in_progress = false
   }
 
   // Connects and initializes this invoice manager
@@ -71,7 +72,11 @@ class PurpleInvoiceManager {
     }
     // Poll for unpaid invoices periodically to handle cases where the client failed to complete the checkout flow
     const polling_interval_ms = parseInt(process.env.LN_INVOICE_POLLING_INTERVAL_MS) || 60 * 1000
-    this.polling_interval_timer = setInterval(() => this.poll_unpaid_invoices(), polling_interval_ms)
+    this.polling_interval_timer = setInterval(() => {
+      this.poll_unpaid_invoices().catch(e => {
+        error("Error polling unpaid invoices: %s", e.toString())
+      })
+    }, polling_interval_ms)
   }
 
   // Purge old invoices from the database
@@ -91,6 +96,7 @@ class PurpleInvoiceManager {
     const checkout_id = uuidv4()
     const checkout_object = {
       id: checkout_id,
+      created_at: current_time(),
       verified_pubkey: null,
       product_template_name: template_name,
       invoice: null,
@@ -163,18 +169,34 @@ class PurpleInvoiceManager {
   // Polls all incomplete checkout sessions to check for successful payments.
   // Returns a promise that resolves when all checks are done.
   async poll_unpaid_invoices() {
-    const checks = []
-    for (const checkout_id of this.checkout_sessions_db.getKeys()) {
-      const checkout_object = this.checkout_sessions_db.get(checkout_id)
-      if (!checkout_object.completed && checkout_object.invoice) {
-        checks.push(
-          this.check_checkout_object_invoice(checkout_id).catch(e => {
-            error("Error polling invoice for checkout %s: %s", checkout_id, e.toString())
-          })
-        )
-      }
+    if (this.polling_in_progress) {
+      return []
     }
-    return Promise.all(checks)
+
+    this.polling_in_progress = true
+
+    try {
+      const max_checkout_age_seconds = 7 * 24 * 60 * 60
+      for (const checkout_id of this.checkout_sessions_db.getKeys()) {
+        const checkout_object = this.checkout_sessions_db.get(checkout_id)
+        if (!checkout_object || checkout_object.completed || !checkout_object.invoice) {
+          continue
+        }
+
+        if (!checkout_object.created_at || checkout_object.created_at < current_time() - max_checkout_age_seconds) {
+          continue
+        }
+
+        try {
+          await this.check_checkout_object_invoice(checkout_id)
+        } catch (e) {
+          error("Error polling invoice for checkout %s: %s", checkout_id, e.toString())
+        }
+      }
+      return []
+    } finally {
+      this.polling_in_progress = false
+    }
   }
 
   // Call this when the user wants to checkout a purple subscription and needs an invoice to pay
