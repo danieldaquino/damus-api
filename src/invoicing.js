@@ -252,9 +252,17 @@ class PurpleInvoiceManager {
   async ln_rpc(args) {
     const { method, params } = args
     const ln = await PurpleInvoiceManager.LNSocket()
-    ln.genkey()
-    await ln.connect_and_init(this.nodeid, this.address)
-    return await ln.rpc({ rune: this.rune, method, params })
+    try {
+      ln.genkey()
+      await ln.connect_and_init(this.nodeid, this.address)
+      return await ln.rpc({ rune: this.rune, method, params })
+    } finally {
+      if (typeof ln.destroy === 'function') {
+        ln.destroy()
+      } else if (typeof ln.disconnect === 'function') {
+        ln.disconnect()
+      }
+    }
   }
 
   // Convenience function to get the LNSocket instance, in a way that is easy to mock in tests
