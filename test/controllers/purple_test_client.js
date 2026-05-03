@@ -59,6 +59,44 @@ class PurpleTestClient {
   }
 
   /**
+   * Searches GIFs through the server-side KLIPY proxy.
+   *
+   * @param {Record<string, string | number | boolean | undefined>} query - Query parameters
+   * @param {PurpleTestClientRequestOptions} options - The request options
+   * @returns {Promise<Object>} The response
+   */
+  async search_gifs(query = {}, options = {}) {
+    options = PurpleTestClient.patch_options({ nip98_authenticated: true }, options)
+    const search_params = new URLSearchParams()
+    for (const [key, value] of Object.entries(query)) {
+      if (value !== undefined && value !== null) {
+        search_params.append(key, String(value))
+      }
+    }
+    const suffix = search_params.toString().length > 0 ? `?${search_params.toString()}` : ''
+    return await this.get(`/gifs/search${suffix}`, options)
+  }
+
+  /**
+   * Fetches featured GIFs through the server-side KLIPY proxy.
+   *
+   * @param {Record<string, string | number | boolean | undefined>} query - Query parameters
+   * @param {PurpleTestClientRequestOptions} options - The request options
+   * @returns {Promise<Object>} The response
+   */
+  async featured_gifs(query = {}, options = {}) {
+    options = PurpleTestClient.patch_options({ nip98_authenticated: true }, options)
+    const search_params = new URLSearchParams()
+    for (const [key, value] of Object.entries(query)) {
+      if (value !== undefined && value !== null) {
+        search_params.append(key, String(value))
+      }
+    }
+    const suffix = search_params.toString().length > 0 ? `?${search_params.toString()}` : ''
+    return await this.get(`/gifs/featured${suffix}`, options)
+  }
+
+  /**
      * Creates a new checkout.
      *
      * @param {string} product_template_name - The name of the product template
