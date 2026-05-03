@@ -60,6 +60,8 @@ class PurpleTestController {
     process.env.NOTEDECK_INSTALL_PREMIUM_MD = "./notedeck-install-instructions-premium.md"
     process.env.DAMUS_ANDROID_INSTALL_MD = "./damus-android-install-instructions.md"
     process.env.DAMUS_ANDROID_INSTALL_PREMIUM_MD = "./damus-android-install-instructions-premium.md"
+    process.env.KLIPY_APP_KEY = "test-klipy-app-key"
+    process.env.KLIPY_API_BASE_URL = "https://api.klipy.test"
     this.env = process.env
   }
 
