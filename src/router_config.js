@@ -9,8 +9,19 @@ const { nip19 } = require('nostr-tools')
 const { PURPLE_ONE_MONTH } = require('./invoicing')
 const error = require("debug")("api:error")
 const { update_iap_history_with_apple_if_needed_and_return_updated_user } = require('./iap_refresh_management')
+const { proxy_klipy_gif_search, proxy_klipy_gif_featured } = require('./klipy_proxy')
 const fs = require('fs');
 const path = require('path');
+
+function require_active_purple_user(app, req, res) {
+  const check_account_result = check_account(app, req.authorized_pubkey)
+  if (!check_account_result.ok) {
+    unauthorized_response(res, check_account_result.message)
+    return false
+  }
+
+  return true
+}
 
 function config_router(app) {
   const router = app.router
@@ -35,6 +46,24 @@ function config_router(app) {
       return
     }
     handle_translate(app, req, res)
+  })
+
+  // MARK: GIF routes
+
+  router.get('/gifs/search', required_nip98_auth, async (req, res) => {
+    if (!require_active_purple_user(app, req, res)) {
+      return
+    }
+
+    await proxy_klipy_gif_search(app, req, res)
+  })
+
+  router.get('/gifs/featured', required_nip98_auth, async (req, res) => {
+    if (!require_active_purple_user(app, req, res)) {
+      return
+    }
+
+    await proxy_klipy_gif_featured(req, res)
   })
 
   // MARK: Account management routes
