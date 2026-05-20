@@ -240,3 +240,49 @@ test('LN Flow — Background polling processes paid invoices without client chec
 
   t.end();
 });
+
+test('LN Flow — failed LN node connection during check-invoice returns unpaid checkout and server keeps working', async (t) => {
+  const purple_api_controller = await PurpleTestController.new(t);
+  const user_pubkey_1 = purple_api_controller.new_client();
+
+  const new_checkout_response = await purple_api_controller.clients[user_pubkey_1].new_checkout(PURPLE_ONE_MONTH);
+  t.same(new_checkout_response.statusCode, 200);
+
+  const verify_checkout_response = await purple_api_controller.clients[user_pubkey_1].verify_checkout(new_checkout_response.body.id);
+  t.same(verify_checkout_response.statusCode, 200);
+
+  const originalLNSocket = purple_api_controller.purple_api.invoice_manager.constructor.LNSocket;
+  purple_api_controller.purple_api.invoice_manager.constructor.LNSocket = async () => ({
+    genkey() {},
+    async connect_and_init() {
+      throw new Error('connect ECONNREFUSED 24.86.66.39:9735');
+    },
+    destroy() {}
+  });
+
+  t.teardown(() => {
+    purple_api_controller.purple_api.invoice_manager.constructor.LNSocket = originalLNSocket;
+  });
+
+  const failedCheckResponse = await purple_api_controller.clients[user_pubkey_1].check_invoice(new_checkout_response.body.id);
+  t.same(failedCheckResponse.statusCode, 200);
+  t.same(failedCheckResponse.body.completed, false);
+  t.same(failedCheckResponse.body.invoice?.paid, undefined);
+
+  const checkoutAfterFailure = await purple_api_controller.clients[user_pubkey_1].get_checkout(new_checkout_response.body.id);
+  t.same(checkoutAfterFailure.statusCode, 200);
+  t.same(checkoutAfterFailure.body.completed, false);
+  t.same(checkoutAfterFailure.body.invoice?.paid, undefined);
+
+  const accountAfterFailure = await purple_api_controller.clients[user_pubkey_1].get_account();
+  t.same(accountAfterFailure.statusCode, 404);
+
+  const productsResponse = await purple_api_controller.clients[user_pubkey_1].get_products();
+  t.same(productsResponse.statusCode, 200);
+  t.ok(productsResponse.body[PURPLE_ONE_MONTH]);
+
+  const secondCheckoutResponse = await purple_api_controller.clients[user_pubkey_1].new_checkout(PURPLE_ONE_MONTH);
+  t.same(secondCheckoutResponse.statusCode, 200);
+});
+
+
