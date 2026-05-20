@@ -258,3 +258,37 @@ test('config_router - GIF featured proxy requires NIP-98 auth', async (t) => {
   t.equal(response.statusCode, 401)
   t.same(response.body, { error: 'Nostr authorization header missing' })
 })
+
+test('express handles rejected async route handlers without crashing the server process', async (t) => {
+  const app = express()
+  const request = await supertest_client(app, t)
+
+  let serverStillHandledRequests = false
+
+  app.get('/throws', async () => {
+    throw new Error('boom')
+  })
+
+  app.use((err, req, res, next) => {
+    t.equal(err.message, 'boom', 'Express forwards rejected async handler errors to middleware')
+    res.status(500).json({ error: err.message })
+  })
+
+  app.get('/ok', async (req, res) => {
+    serverStillHandledRequests = true
+    res.status(200).json({ ok: true })
+  })
+
+  const failedResponse = await request
+    .get('/throws')
+    .expect(500)
+
+  t.same(failedResponse.body, { error: 'boom' })
+
+  const successResponse = await request
+    .get('/ok')
+    .expect(200)
+
+  t.same(successResponse.body, { ok: true })
+  t.equal(serverStillHandledRequests, true, 'Server continues handling later requests after async rejection')
+})
